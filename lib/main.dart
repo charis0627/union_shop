@@ -101,6 +101,17 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/about');
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    foregroundColor: Colors.grey,
+                                  ),
+                                  child: const Text('About Us'),
+                                ),
                                 IconButton(
                                   icon: const Icon(
                                     Icons.search,
@@ -297,24 +308,13 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  const Text(
-                    'Placeholder Footer',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/about');
-                    },
-                    child: const Text('About Us'),
-                  ),
-                ],
+              child: const Text(
+                'Placeholder Footer',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ],

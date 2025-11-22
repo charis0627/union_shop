@@ -13,6 +13,7 @@ class AboutUsPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'About Us',
