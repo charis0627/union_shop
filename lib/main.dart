@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 
@@ -110,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                                         horizontal: 12),
                                     foregroundColor: Colors.grey,
                                   ),
-                                  child: const Text('About Us'),
+                                  child: const Text('About'),
                                 ),
                                 IconButton(
                                   icon: const Icon(
@@ -307,15 +308,41 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+              child: LayoutBuilder(builder: (context, constraints) {
+                final isWide = constraints.maxWidth > 800;
+                if (isWide) {
+                  return const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Opening hours',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(height: 12),
+                              Text('Winter Break Closure dates'),
+                              SizedBox(height: 8),
+                              Text('Closing 4pm 19/12.2025'),
+                              SizedBox(height: 8),
+                              Text('Reopening 10am 05/01/2026'),
+                              SizedBox(height: 18),
+                              Divider(),
+                              SizedBox(height: 12),
+                              Text('(Term time)'),
+                              SizedBox(height: 8),
+                              Text('Monday - Friday 10am - 4pm'),
+                              SizedBox(height: 8),
+                              Text('Purchases online 24/7')
+                            ],
+                          ),
+                        ),
+                      ]);
+                }
+              }),
             ),
           ],
         ),
