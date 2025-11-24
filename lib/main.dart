@@ -312,10 +312,10 @@ class HomeScreen extends StatelessWidget {
               child: LayoutBuilder(builder: (context, constraints) {
                 final isWide = constraints.maxWidth > 800;
                 if (isWide) {
-                  return const Row(
+                  return Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
+                        const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -337,6 +337,39 @@ class HomeScreen extends StatelessWidget {
                               Text('Monday - Friday 10am - 4pm'),
                               SizedBox(height: 8),
                               Text('Purchases online 24/7')
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Help & Info',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              const SizedBox(height: 12),
+                              TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    foregroundColor: Colors.black),
+                                child: const Text('Search'),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    foregroundColor: Colors.black),
+                                child: const Text('Terms & Conditions of Sale'),
+                              ),
+                              TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    foregroundColor: Colors.black),
+                                child: const Text('Policy'),
+                              ),
                             ],
                           ),
                         ),
