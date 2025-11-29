@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
+import 'package:union_shop/authentication_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -25,7 +26,8 @@ class UnionShopApp extends StatelessWidget {
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
         '/product': (context) => const ProductPage(),
-        '/about': (context) => const AboutUsPage()
+        '/about': (context) => const AboutUsPage(),
+        '/auth': (context) => const AuthenticationPage(),
       },
     );
   }
@@ -137,7 +139,9 @@ class HomeScreen extends StatelessWidget {
                                     minWidth: 32,
                                     minHeight: 32,
                                   ),
-                                  onPressed: placeholderCallbackForButtons,
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/auth');
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(

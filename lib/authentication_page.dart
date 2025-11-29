@@ -87,6 +87,8 @@ class AuthenticationPage extends StatelessWidget {
                       ),
                     ),
 
+                    const SizedBox(height: 16),
+
                     //continue button
                     SizedBox(
                       height: 45,
