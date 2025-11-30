@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/authentication_page.dart';
+import 'package:union_shop/sale_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -27,6 +28,7 @@ class UnionShopApp extends StatelessWidget {
       routes: {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
+        '/sale': (context) => const SalePage(),
         '/auth': (context) => const AuthenticationPage(),
       },
     );
@@ -106,12 +108,23 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 TextButton(
                                   onPressed: () {
+                                    Navigator.pushNamed(context, '/sale');
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
+                                    foregroundColor: Colors.black,
+                                  ),
+                                  child: const Text('SALE!'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
                                     Navigator.pushNamed(context, '/about');
                                   },
                                   style: TextButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 12),
-                                    foregroundColor: Colors.grey,
+                                    foregroundColor: Colors.black,
                                   ),
                                   child: const Text('About'),
                                 ),
@@ -132,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                                   icon: const Icon(
                                     Icons.person_outline,
                                     size: 18,
-                                    color: Colors.grey,
+                                    color: Colors.black,
                                   ),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(
