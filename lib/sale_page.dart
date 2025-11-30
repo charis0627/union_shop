@@ -55,36 +55,98 @@ class SalePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             decoration: const BoxDecoration(
                 border: Border(bottom: BorderSide(color: Colors.black))),
-            child: Row(
-              children: [
-                const Text('Filter By',
-                    style: TextStyle(letterSpacing: 1.2, color: Colors.grey)),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
-                  value: 'All products',
-                  items: const [
-                    DropdownMenuItem(
-                        value: 'All products', child: Text('All products')),
+            child: LayoutBuilder(builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 480;
+
+              // Narrow screens: stack controls to avoid horizontal overflow
+              if (isNarrow) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Filter row full width
+                    Row(
+                      children: [
+                        const Text('Filter By',
+                            style: TextStyle(
+                                letterSpacing: 1.2, color: Colors.grey)),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: 'All products',
+                            items: const [
+                              DropdownMenuItem(
+                                  value: 'All products',
+                                  child: Text('All products')),
+                            ],
+                            onChanged: (_) {},
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    // Sort row and product count
+                    Row(
+                      children: [
+                        const Text('Sort By',
+                            style: TextStyle(
+                                letterSpacing: 1.2, color: Colors.grey)),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: 'Best selling',
+                            items: const [
+                              DropdownMenuItem(
+                                  value: 'Best selling',
+                                  child: Text('Best selling')),
+                            ],
+                            onChanged: (_) {},
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text('3 products',
+                            style: TextStyle(color: Colors.black54)),
+                      ],
+                    ),
                   ],
-                  onChanged: (_) {},
-                ),
-                const SizedBox(width: 28),
-                const Text('Sort By',
-                    style:
-                        TextStyle(letterSpacing: 1.2, color: Colors.black54)),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
-                  value: 'Best selling',
-                  items: const [
-                    DropdownMenuItem(
-                        value: 'Best selling', child: Text('Best selling')),
-                  ],
-                  onChanged: (_) {},
-                ),
-                const Spacer(),
-                const Text('3 products', style: TextStyle(color: Colors.black)),
-              ],
-            ),
+                );
+              }
+
+              // Wide screens: single horizontal row (keeps a small fixed gap)
+              return Row(
+                children: [
+                  const Text('Filter By',
+                      style:
+                          TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                  const SizedBox(width: 12),
+                  DropdownButton<String>(
+                    value: 'All products',
+                    items: const [
+                      DropdownMenuItem(
+                          value: 'All products', child: Text('All products')),
+                    ],
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(width: 16),
+                  const Text('Sort By',
+                      style:
+                          TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                  const SizedBox(width: 12),
+                  DropdownButton<String>(
+                    value: 'Best selling',
+                    items: const [
+                      DropdownMenuItem(
+                          value: 'Best selling', child: Text('Best selling')),
+                    ],
+                    onChanged: (_) {},
+                  ),
+                  const SizedBox(width: 24),
+                  const Text('3 products',
+                      style: TextStyle(color: Colors.black54)),
+                ],
+              );
+            }),
           ),
           Expanded(
             child: Padding(
