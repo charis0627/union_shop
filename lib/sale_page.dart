@@ -41,8 +41,8 @@ class SalePage extends StatelessWidget {
               children: [
                 Text('SALE',
                     style:
-                        TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                SizedBox(height: 12),
+                        TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+                SizedBox(height: 10),
                 Text("Don't miss out! Get yours before they're all gone!",
                     style: TextStyle(color: Colors.black)),
                 SizedBox(height: 12),
@@ -58,7 +58,7 @@ class SalePage extends StatelessWidget {
             child: Row(
               children: [
                 const Text('Filter By',
-                    style: TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                    style: TextStyle(letterSpacing: 1.2, color: Colors.grey)),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
                   value: 'All products',
@@ -68,9 +68,10 @@ class SalePage extends StatelessWidget {
                   ],
                   onChanged: (_) {},
                 ),
-                const Spacer(),
+                const SizedBox(width: 28),
                 const Text('Sort By',
-                    style: TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                    style:
+                        TextStyle(letterSpacing: 1.2, color: Colors.black54)),
                 const SizedBox(width: 12),
                 DropdownButton<String>(
                   value: 'Best selling',
@@ -80,7 +81,7 @@ class SalePage extends StatelessWidget {
                   ],
                   onChanged: (_) {},
                 ),
-                const SizedBox(width: 24),
+                const Spacer(),
                 const Text('3 products', style: TextStyle(color: Colors.black)),
               ],
             ),
