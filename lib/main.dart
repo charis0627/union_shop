@@ -106,48 +106,90 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: Center(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                                context, '/sale');
-                                          },
-                                          style: TextButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12),
-                                            foregroundColor: Colors.black,
-                                          ),
-                                          child: const Text('SALE!'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pushNamed(
-                                                context, '/about');
-                                          },
-                                          style: TextButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12),
-                                            foregroundColor: Colors.black,
-                                          ),
-                                          child: const Text('About'),
-                                        ),
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                  context, '/collections');
-                                            },
-                                            style: TextButton.styleFrom(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12),
-                                              foregroundColor: Colors.black,
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      if (constraints.maxWidth < 420) {
+                                        return Center(
+                                          child: PopupMenuButton<String>(
+                                            icon: const Icon(
+                                              Icons.more_horiz,
+                                              color: Colors.black,
                                             ),
-                                            child: const Text('Collections')),
-                                      ],
-                                    ),
+                                            onSelected: (value) {
+                                              if (value == 'sale') {
+                                                Navigator.pushNamed(
+                                                    context, '/sale');
+                                              } else if (value == 'about') {
+                                                Navigator.pushNamed(
+                                                    context, '/about');
+                                              } else if (value ==
+                                                  'collections') {
+                                                Navigator.pushNamed(
+                                                    context, '/collections');
+                                              }
+                                            },
+                                            itemBuilder: (_) => const [
+                                              PopupMenuItem(
+                                                  value: 'sale',
+                                                  child: Text('SALE!')),
+                                              PopupMenuItem(
+                                                  value: 'about',
+                                                  child: Text('About')),
+                                              PopupMenuItem(
+                                                  value: 'collections',
+                                                  child: Text('Collections')),
+                                            ],
+                                          ),
+                                        );
+                                      }
+
+                                      return Center(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pushNamed(
+                                                    context, '/sale');
+                                              },
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
+                                                foregroundColor: Colors.black,
+                                              ),
+                                              child: const Text('SALE!'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pushNamed(
+                                                    context, '/about');
+                                              },
+                                              style: TextButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
+                                                foregroundColor: Colors.black,
+                                              ),
+                                              child: const Text('About'),
+                                            ),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pushNamed(
+                                                      context, '/collections');
+                                                },
+                                                style: TextButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12),
+                                                  foregroundColor: Colors.black,
+                                                ),
+                                                child:
+                                                    const Text('Collections')),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                                 Row(
