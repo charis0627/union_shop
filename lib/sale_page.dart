@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/main_header.dart';
+import 'package:union_shop/widgets/main_footer.dart';
 
 class SalePage extends StatelessWidget {
   const SalePage({super.key});
@@ -29,123 +30,119 @@ class SalePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainHeader(),
-      body: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 28.0, horizontal: 24.0),
-            child: Column(
-              children: [
-                Text('SALE',
-                    style:
-                        TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
-                Text("Don't miss out! Get yours before they're all gone!",
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 12),
-                Text('All prices shown are inclusive of the discount',
-                    style: TextStyle(color: Colors.black)),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 28.0, horizontal: 24.0),
+              child: Column(
+                children: [
+                  Text('SALE',
+                      style:
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
+                  Text("Don't miss out! Get yours before they're all gone!",
+                      style: TextStyle(color: Colors.black)),
+                  SizedBox(height: 12),
+                  Text('All prices shown are inclusive of the discount',
+                      style: TextStyle(color: Colors.black)),
+                ],
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: const BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.black))),
-            child: LayoutBuilder(builder: (context, constraints) {
-              final isNarrow = constraints.maxWidth < 480;
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: const BoxDecoration(
+                  border: Border(bottom: BorderSide(color: Colors.black))),
+              child: LayoutBuilder(builder: (context, constraints) {
+                final isNarrow = constraints.maxWidth < 480;
 
-              // Narrow screens: stack controls to avoid horizontal overflow
-              if (isNarrow) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                if (isNarrow) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text('Filter By',
+                              style: TextStyle(
+                                  letterSpacing: 1.2, color: Colors.grey)),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: 'All products',
+                              items: const [
+                                DropdownMenuItem(
+                                    value: 'All products',
+                                    child: Text('All products')),
+                              ],
+                              onChanged: (_) {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Text('Sort By',
+                              style: TextStyle(
+                                  letterSpacing: 1.2, color: Colors.grey)),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: 'Best selling',
+                              items: const [
+                                DropdownMenuItem(
+                                    value: 'Best selling',
+                                    child: Text('Best selling')),
+                              ],
+                              onChanged: (_) {},
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text('3 products',
+                              style: TextStyle(color: Colors.black)),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+
+                return Row(
                   children: [
-                    // Filter row full width
-                    Row(
-                      children: [
-                        const Text('Filter By',
-                            style: TextStyle(
-                                letterSpacing: 1.2, color: Colors.grey)),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            value: 'All products',
-                            items: const [
-                              DropdownMenuItem(
-                                  value: 'All products',
-                                  child: Text('All products')),
-                            ],
-                            onChanged: (_) {},
-                          ),
-                        ),
+                    const Text('Filter By',
+                        style:
+                            TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                    const SizedBox(width: 12),
+                    DropdownButton<String>(
+                      value: 'All products',
+                      items: const [
+                        DropdownMenuItem(
+                            value: 'All products', child: Text('All products')),
                       ],
+                      onChanged: (_) {},
                     ),
-                    const SizedBox(height: 8),
-                    // Sort row and product count
-                    Row(
-                      children: [
-                        const Text('Sort By',
-                            style: TextStyle(
-                                letterSpacing: 1.2, color: Colors.grey)),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            value: 'Best selling',
-                            items: const [
-                              DropdownMenuItem(
-                                  value: 'Best selling',
-                                  child: Text('Best selling')),
-                            ],
-                            onChanged: (_) {},
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        const Text('3 products',
-                            style: TextStyle(color: Colors.black54)),
+                    const SizedBox(width: 16),
+                    const Text('Sort By',
+                        style:
+                            TextStyle(letterSpacing: 1.2, color: Colors.black)),
+                    const SizedBox(width: 12),
+                    DropdownButton<String>(
+                      value: 'Best selling',
+                      items: const [
+                        DropdownMenuItem(
+                            value: 'Best selling', child: Text('Best selling')),
                       ],
+                      onChanged: (_) {},
                     ),
+                    const SizedBox(width: 24),
+                    const Text('3 products',
+                        style: TextStyle(color: Colors.black)),
                   ],
                 );
-              }
-
-              // Wide screens: single horizontal row (keeps a small fixed gap)
-              return Row(
-                children: [
-                  const Text('Filter By',
-                      style:
-                          TextStyle(letterSpacing: 1.2, color: Colors.black)),
-                  const SizedBox(width: 12),
-                  DropdownButton<String>(
-                    value: 'All products',
-                    items: const [
-                      DropdownMenuItem(
-                          value: 'All products', child: Text('All products')),
-                    ],
-                    onChanged: (_) {},
-                  ),
-                  const SizedBox(width: 16),
-                  const Text('Sort By',
-                      style:
-                          TextStyle(letterSpacing: 1.2, color: Colors.black)),
-                  const SizedBox(width: 12),
-                  DropdownButton<String>(
-                    value: 'Best selling',
-                    items: const [
-                      DropdownMenuItem(
-                          value: 'Best selling', child: Text('Best selling')),
-                    ],
-                    onChanged: (_) {},
-                  ),
-                  const SizedBox(width: 24),
-                  const Text('3 products',
-                      style: TextStyle(color: Colors.black54)),
-                ],
-              );
-            }),
-          ),
-          Expanded(
-            child: Padding(
+              }),
+            ),
+            Padding(
               padding: const EdgeInsets.all(24.0),
               child: LayoutBuilder(builder: (context, constraints) {
                 final width = constraints.maxWidth;
@@ -153,6 +150,8 @@ class SalePage extends StatelessWidget {
                     width >= 900 ? 3 : (width >= 600 ? 2 : 1);
 
                 return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: 24,
@@ -173,8 +172,10 @@ class SalePage extends StatelessWidget {
                 );
               }),
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+            const MainFooter(),
+          ],
+        ),
       ),
     );
   }
