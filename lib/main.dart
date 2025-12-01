@@ -4,6 +4,7 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/authentication_page.dart';
 import 'package:union_shop/sale_page.dart';
+import 'package:union_shop/collections_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -30,6 +31,7 @@ class UnionShopApp extends StatelessWidget {
         '/about': (context) => const AboutUsPage(),
         '/sale': (context) => const SalePage(),
         '/auth': (context) => const AuthenticationPage(),
+        '/collections': (context) => const CollectionsPage(),
       },
     );
   }
@@ -100,9 +102,6 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          //const Spacer(),
-                          //ConstrainedBox(
-                          //constraints: const BoxConstraints(maxWidth: 600),
                           Expanded(
                             child: Row(
                               children: [
@@ -135,6 +134,18 @@ class HomeScreen extends StatelessWidget {
                                           ),
                                           child: const Text('About'),
                                         ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, '/collections');
+                                            },
+                                            style: TextButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              foregroundColor: Colors.black,
+                                            ),
+                                            child: const Text('Collections')),
                                       ],
                                     ),
                                   ),
