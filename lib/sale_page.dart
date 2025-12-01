@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/main_header.dart';
 
 class SalePage extends StatelessWidget {
   const SalePage({super.key});
@@ -27,12 +28,7 @@ class SalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text('SALE', style: TextStyle(color: Colors.black)),
-        centerTitle: true,
-      ),
+      appBar: const MainHeader(),
       body: Column(
         children: [
           const Padding(
