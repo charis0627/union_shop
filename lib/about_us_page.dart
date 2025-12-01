@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/main_header.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About Us'),
-      ),
-      body: const Padding(
+    return const Scaffold(
+      appBar: MainHeader(),
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(10.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: 12),
               Text(
                 'About Us',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
