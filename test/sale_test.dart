@@ -6,17 +6,15 @@ void main() {
   testWidgets('SalePage shows header and promo text',
       (WidgetTester tester) async {
     // ensure a wide test window so the header filter row doesn't overflow
-    tester.binding.window.physicalSizeTestValue = const Size(1200, 800);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(() {
-      tester.binding.window.clearPhysicalSizeTestValue();
-      tester.binding.window.clearDevicePixelRatioTestValue();
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() async {
+      await tester.binding.setSurfaceSize(null);
     });
 
     await tester.pumpWidget(const MaterialApp(home: SalePage()));
 
-    // Find the AppBar title specifically (there is also a body heading with 'SALE')
-    expect(find.widgetWithText(AppBar, 'SALE'), findsOneWidget);
+    // The page uses a custom header; assert the body heading is present
+    expect(find.text('SALE'), findsOneWidget);
     expect(find.textContaining("Don't miss out"), findsOneWidget);
     expect(find.text('All prices shown are inclusive of the discount'),
         findsOneWidget);
@@ -25,11 +23,9 @@ void main() {
   testWidgets('SalePage shows dropdowns and product cards',
       (WidgetTester tester) async {
     // run tests using a wide window to avoid RenderFlex overflow in the test environment
-    tester.binding.window.physicalSizeTestValue = const Size(1200, 800);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(() {
-      tester.binding.window.clearPhysicalSizeTestValue();
-      tester.binding.window.clearDevicePixelRatioTestValue();
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() async {
+      await tester.binding.setSurfaceSize(null);
     });
 
     await tester.pumpWidget(const MaterialApp(home: SalePage()));
@@ -47,11 +43,9 @@ void main() {
   testWidgets('Tapping a product shows a SnackBar (dummy)',
       (WidgetTester tester) async {
     // widen the test window to avoid layout overflows in the test environment
-    tester.binding.window.physicalSizeTestValue = const Size(1200, 800);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(() {
-      tester.binding.window.clearPhysicalSizeTestValue();
-      tester.binding.window.clearDevicePixelRatioTestValue();
+    await tester.binding.setSurfaceSize(const Size(1200, 800));
+    addTearDown(() async {
+      await tester.binding.setSurfaceSize(null);
     });
 
     await tester.pumpWidget(const MaterialApp(home: SalePage()));
