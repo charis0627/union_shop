@@ -5,58 +5,76 @@ import 'package:union_shop/product_page.dart';
 void main() {
   group('Product Page Tests', () {
     Widget createTestWidget() {
-      return const MaterialApp(home: ProductPage());
+      return const MaterialApp(
+        home: ProductPage(
+          title: 'Test Product',
+          price: '£9.99',
+          asset: 'assets/images/notebook.png',
+        ),
+      );
     }
 
-    testWidgets('should display product page with basic elements', (
-      tester,
-    ) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+    testWidgets('displays product title, price and description',
+        (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 800));
+      addTearDown(() async => await tester.binding.setSurfaceSize(null));
 
-      // Check that basic UI elements are present
-      expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
-      expect(find.text('Placeholder Product Name'), findsOneWidget);
-      expect(find.text('£15.00'), findsOneWidget);
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      expect(find.text('Test Product'), findsOneWidget);
+      expect(find.text('£9.99'), findsOneWidget);
       expect(find.text('Description'), findsOneWidget);
     });
 
-    testWidgets('should display student instruction text', (tester) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pump();
+    testWidgets('has three dropdowns and two action buttons', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 800));
+      addTearDown(() async => await tester.binding.setSurfaceSize(null));
 
-      // Check that student instruction is present
-      expect(
-        find.text(
-          'Students should add size options, colour options, quantity selector, add to cart button, and buy now button here.',
-        ),
-        findsOneWidget,
-      );
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      // Three DropdownButton<String> widgets: Color, Size, Quantity
+      expect(find.byType(DropdownButton<String>), findsNWidgets(3));
+
+      // Action buttons
+      expect(find.text('ADD TO CART'), findsOneWidget);
+      expect(find.text('Buy with shop'), findsOneWidget);
     });
 
-    testWidgets('should display header icons', (tester) async {
+    testWidgets(
+        'selecting options updates state and add to cart shows snackbar',
+        (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 800));
+      addTearDown(() async => await tester.binding.setSurfaceSize(null));
+
       await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      // Open Color dropdown and select 'Green'
+      await tester.tap(find.byType(DropdownButton<String>).at(0));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Green').last);
+      await tester.pumpAndSettle();
+
+      // Open Size dropdown and select 'M'
+      await tester.tap(find.byType(DropdownButton<String>).at(1));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('M').last);
+      await tester.pumpAndSettle();
+
+      // Open Quantity dropdown and select '2'
+      await tester.tap(find.byType(DropdownButton<String>).at(2));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('2').last);
+      await tester.pumpAndSettle();
+
+      // Tap Add to Cart and expect a SnackBar with chosen values
+      await tester.tap(find.text('ADD TO CART'));
       await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
 
-      // Check that header icons are present
-      expect(find.byIcon(Icons.search), findsOneWidget);
-      expect(find.byIcon(Icons.shopping_bag_outlined), findsOneWidget);
-      expect(find.byIcon(Icons.menu), findsOneWidget);
-    });
-
-    testWidgets('should display footer', (tester) async {
-      await tester.pumpWidget(createTestWidget());
-      await tester.pump();
-
-      // Check that footer is present
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Added 2 x'), findsOneWidget);
     });
   });
 }
