@@ -1,5 +1,7 @@
 // lib/print_shack_page.dart
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/main_header.dart';
+import 'package:union_shop/widgets/main_footer.dart';
 
 class PrintShackPage extends StatefulWidget {
   const PrintShackPage({super.key});
@@ -246,112 +248,122 @@ class _PrintShackPageState extends State<PrintShackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('The Print Shack'),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black),
+      appBar: const MainHeader(),
       body: LayoutBuilder(builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 900;
         return SingleChildScrollView(
           padding: const EdgeInsets.all(24),
-          child: isWide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Left: image & thumbnails
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 420,
-                            child: _buildPreview(constraints),
-                          ),
-                          const SizedBox(height: 12),
-                          SizedBox(
-                            height: 72,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: thumbnails.length,
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(width: 12),
-                              itemBuilder: (c, i) {
-                                final t = thumbnails[i];
-                                final selected = t == selectedImage;
-                                return GestureDetector(
-                                  onTap: () =>
-                                      setState(() => selectedImage = t),
-                                  child: Container(
-                                    width: 72,
-                                    height: 72,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: selected
-                                              ? Colors.deepPurple
-                                              : Colors.grey.shade300,
-                                          width: selected ? 3 : 1),
-                                    ),
-                                    child: Image.asset(t,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (c, e, s) =>
-                                            Container(color: Colors.grey[300])),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 40),
-                    // Right: form
-                    Expanded(flex: 4, child: _buildForm(constraints.maxWidth)),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 12),
-                    SizedBox(height: 300, child: _buildPreview(constraints)),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 72,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: thumbnails.length,
-                        separatorBuilder: (_, __) => const SizedBox(width: 12),
-                        itemBuilder: (c, i) {
-                          final t = thumbnails[i];
-                          final selected = t == selectedImage;
-                          return GestureDetector(
-                            onTap: () => setState(() => selectedImage = t),
-                            child: Container(
-                              width: 72,
-                              height: 72,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: selected
-                                      ? Colors.deepPurple
-                                      : Colors.grey.shade300,
-                                  width: selected ? 3 : 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // main content
+              isWide
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Left: image & thumbnails
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 420,
+                                child: _buildPreview(constraints),
+                              ),
+                              const SizedBox(height: 12),
+                              SizedBox(
+                                height: 72,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: thumbnails.length,
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(width: 12),
+                                  itemBuilder: (c, i) {
+                                    final t = thumbnails[i];
+                                    final selected = t == selectedImage;
+                                    return GestureDetector(
+                                      onTap: () =>
+                                          setState(() => selectedImage = t),
+                                      child: Container(
+                                        width: 72,
+                                        height: 72,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: selected
+                                                  ? Colors.deepPurple
+                                                  : Colors.grey.shade300,
+                                              width: selected ? 3 : 1),
+                                        ),
+                                        child: Image.asset(t,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (c, e, s) =>
+                                                Container(
+                                                    color: Colors.grey[300])),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
-                              child: Image.asset(
-                                t,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c, e, s) =>
-                                    Container(color: Colors.grey[300]),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 40),
+                        // Right: form
+                        Expanded(
+                            flex: 4, child: _buildForm(constraints.maxWidth)),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 12),
+                        SizedBox(
+                            height: 300, child: _buildPreview(constraints)),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: 72,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: thumbnails.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(width: 12),
+                            itemBuilder: (c, i) {
+                              final t = thumbnails[i];
+                              final selected = t == selectedImage;
+                              return GestureDetector(
+                                onTap: () => setState(() => selectedImage = t),
+                                child: Container(
+                                  width: 72,
+                                  height: 72,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: selected
+                                          ? Colors.deepPurple
+                                          : Colors.grey.shade300,
+                                      width: selected ? 3 : 1,
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    t,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (c, e, s) =>
+                                        Container(color: Colors.grey[300]),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        _buildForm(constraints.maxWidth),
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    _buildForm(constraints.maxWidth),
-                  ],
-                ),
+              // Footer
+              const SizedBox(height: 24),
+              const MainFooter(),
+            ],
+          ),
         );
       }),
     );
