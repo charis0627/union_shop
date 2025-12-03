@@ -60,7 +60,10 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                 color: Colors.black,
                               ),
                               onSelected: (value) {
-                                if (value == 'sale') {
+                                if (value == 'home') {
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, '/', (route) => false);
+                                } else if (value == 'sale') {
                                   Navigator.pushNamed(context, '/sale');
                                 } else if (value == 'about') {
                                   Navigator.pushNamed(context, '/about');
@@ -69,6 +72,8 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                 }
                               },
                               itemBuilder: (_) => const [
+                                PopupMenuItem(
+                                    value: 'home', child: Text('Home')),
                                 PopupMenuItem(
                                     value: 'sale', child: Text('SALE!')),
                                 PopupMenuItem(
@@ -85,6 +90,18 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/', (route) => false),
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  foregroundColor: Colors.black,
+                                ),
+                                child: const Text('Home'),
+                              ),
+                              const SizedBox(width: 8),
                               TextButton(
                                 onPressed: () =>
                                     Navigator.pushNamed(context, '/sale'),
