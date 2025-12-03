@@ -18,10 +18,10 @@ Future<void> _drainAsyncExceptions(WidgetTester tester) async {
 }
 
 void main() {
-  late FlutterExceptionHandler? _origOnError;
+  late FlutterExceptionHandler? origOnError;
 
   setUpAll(() {
-    _origOnError = FlutterError.onError;
+    origOnError = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails details) {
       final msg = details.exceptionAsString();
       if (msg.contains('NetworkImageLoadException') ||
@@ -29,12 +29,12 @@ void main() {
         // swallow expected network image failures in tests
         return;
       }
-      _origOnError?.call(details);
+      origOnError?.call(details);
     };
   });
 
   tearDownAll(() {
-    FlutterError.onError = _origOnError;
+    FlutterError.onError = origOnError;
   });
 
   group('About Print Shack page', () {

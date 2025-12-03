@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/authentication_page.dart';
@@ -366,9 +365,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.7),
-                        ),
+                        color: const Color(0xB3000000),
                       ),
                     ),
                   ),

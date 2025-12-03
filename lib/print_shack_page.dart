@@ -77,7 +77,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
           ),
 
           // dark overlay for readability
-          Container(color: Colors.black.withOpacity(0.15)),
+          Container(color: const Color(0x26000000)),
 
           // centered text preview
           Center(
