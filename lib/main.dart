@@ -5,6 +5,8 @@ import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/authentication_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/collections_page.dart';
+import 'package:union_shop/print_shack_page.dart';
+import 'package:union_shop/about_print_shack.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -30,6 +32,8 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
         '/sale': (context) => const SalePage(),
+        '/print-shack': (context) => const PrintShackPage(),
+        '/about-print-shack': (context) => const AboutPrintShack(),
         '/auth': (context) => const AuthenticationPage(),
         '/collections': (context) => const CollectionsPage(),
       },
@@ -132,6 +136,14 @@ class HomeScreen extends StatelessWidget {
                                                   'collections') {
                                                 Navigator.pushNamed(
                                                     context, '/collections');
+                                              } else if (value ==
+                                                  'print_about') {
+                                                Navigator.pushNamed(context,
+                                                    '/about-print-shack');
+                                              } else if (value ==
+                                                  'print_personalisation') {
+                                                Navigator.pushNamed(
+                                                    context, '/print-shack');
                                               }
                                             },
                                             itemBuilder: (_) => const [
@@ -147,6 +159,15 @@ class HomeScreen extends StatelessWidget {
                                               PopupMenuItem(
                                                   value: 'collections',
                                                   child: Text('Collections')),
+                                              PopupMenuItem(
+                                                  value: 'print_about',
+                                                  child: Text(
+                                                      'The Print Shack — About')),
+                                              PopupMenuItem(
+                                                  value:
+                                                      'print_personalisation',
+                                                  child: Text(
+                                                      'The Print Shack — Personalisation')),
                                             ],
                                           ),
                                         );
@@ -169,6 +190,47 @@ class HomeScreen extends StatelessWidget {
                                                 foregroundColor: Colors.black,
                                               ),
                                               child: const Text('Home'),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            // The Print Shack menu (underlined label + caret)
+                                            PopupMenuButton<String>(
+                                              padding: EdgeInsets.zero,
+                                              onSelected: (value) {
+                                                if (value == 'about') {
+                                                  Navigator.pushNamed(context,
+                                                      '/about-print-shack');
+                                                } else if (value ==
+                                                    'personalisation') {
+                                                  Navigator.pushNamed(
+                                                      context, '/print-shack');
+                                                }
+                                              },
+                                              itemBuilder: (_) => const [
+                                                PopupMenuItem(
+                                                    value: 'about',
+                                                    child: Text('About')),
+                                                PopupMenuItem(
+                                                    value: 'personalisation',
+                                                    child: Text(
+                                                        'Personalisation')),
+                                              ],
+                                              child: const Row(
+                                                children: [
+                                                  Text(
+                                                    'The Print Shack',
+                                                    style: TextStyle(
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                      decorationThickness: 1.5,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  Icon(Icons.arrow_drop_down,
+                                                      size: 18,
+                                                      color: Colors.black),
+                                                ],
+                                              ),
                                             ),
                                             const SizedBox(width: 8),
                                             TextButton(

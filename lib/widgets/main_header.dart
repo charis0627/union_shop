@@ -69,6 +69,11 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                   Navigator.pushNamed(context, '/about');
                                 } else if (value == 'collections') {
                                   Navigator.pushNamed(context, '/collections');
+                                } else if (value == 'print_about') {
+                                  Navigator.pushNamed(
+                                      context, '/about-print-shack');
+                                } else if (value == 'print_personalisation') {
+                                  Navigator.pushNamed(context, '/print-shack');
                                 }
                               },
                               itemBuilder: (_) => const [
@@ -81,6 +86,13 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                 PopupMenuItem(
                                     value: 'collections',
                                     child: Text('Collections')),
+                                PopupMenuItem(
+                                    value: 'print_about',
+                                    child: Text('The Print Shack — About')),
+                                PopupMenuItem(
+                                    value: 'print_personalisation',
+                                    child: Text(
+                                        'The Print Shack — Personalisation')),
                               ],
                             ),
                           );
@@ -100,6 +112,42 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                   foregroundColor: Colors.black,
                                 ),
                                 child: const Text('Home'),
+                              ),
+                              const SizedBox(width: 8),
+                              // The Print Shack menu (underlined label + caret)
+                              PopupMenuButton<String>(
+                                padding: EdgeInsets.zero,
+                                onSelected: (value) {
+                                  if (value == 'about') {
+                                    Navigator.pushNamed(
+                                        context, '/about-print-shack');
+                                  } else if (value == 'personalisation') {
+                                    Navigator.pushNamed(
+                                        context, '/print-shack');
+                                  }
+                                },
+                                itemBuilder: (_) => const [
+                                  PopupMenuItem(
+                                      value: 'about', child: Text('About')),
+                                  PopupMenuItem(
+                                      value: 'personalisation',
+                                      child: Text('Personalisation')),
+                                ],
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      'The Print Shack',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        decorationThickness: 1.5,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(width: 6),
+                                    Icon(Icons.arrow_drop_down,
+                                        size: 18, color: Colors.black),
+                                  ],
+                                ),
                               ),
                               const SizedBox(width: 8),
                               TextButton(
