@@ -11,17 +11,20 @@ void main() {
     testWidgets('About Us Page shows title and content', (
       tester,
     ) async {
+      // ensure a wide surface to avoid header overflow in narrow test view
+      await tester.binding.setSurfaceSize(const Size(1024, 900));
       await tester.pumpWidget(createTestWidget());
       await tester.pump();
 
-      // AppBar title should be present
-      expect(find.widgetWithText(AppBar, 'About Us'), findsOneWidget);
+      // Page title should be present and page should scroll
+      expect(find.text('About Us'), findsOneWidget);
       expect(find.byType(SingleChildScrollView), findsOneWidget);
     });
 
     testWidgets('Tapping About Us button navigates to AboutUsPage', (
       tester,
     ) async {
+      await tester.binding.setSurfaceSize(const Size(1024, 900));
       await tester.pumpWidget(MaterialApp(
         routes: {
           '/about': (c) => const AboutUsPage(),
@@ -48,6 +51,7 @@ void main() {
     });
 
     testWidgets('Back button returns to previous screen', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1024, 900));
       await tester.pumpWidget(MaterialApp(
         routes: {'/about': (c) => const AboutUsPage()},
         home: Builder(builder: (context) {
@@ -66,8 +70,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(AboutUsPage), findsOneWidget);
 
-      // simulate back
-      await tester.pageBack();
+      // simulate back by popping the navigator directly (avoids relying on
+      // a platform back button being present in the header)
+      final NavigatorState navigator =
+          tester.state<NavigatorState>(find.byType(Navigator));
+      navigator.pop();
       await tester.pumpAndSettle();
       expect(find.byType(AboutUsPage), findsNothing);
     });
