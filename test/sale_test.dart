@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/sale_page.dart';
+import 'package:union_shop/product_page.dart';
 
 void main() {
   testWidgets('SalePage shows header and promo text',
@@ -40,7 +41,7 @@ void main() {
     expect(find.byKey(const Key('sale_card_2')), findsOneWidget);
   });
 
-  testWidgets('Tapping a product shows a SnackBar (dummy)',
+  testWidgets('Tapping a product navigates to ProductPage',
       (WidgetTester tester) async {
     // widen the test window to avoid layout overflows in the test environment
     await tester.binding.setSurfaceSize(const Size(1200, 800));
@@ -55,10 +56,11 @@ void main() {
     expect(firstCard, findsOneWidget);
     await tester.tap(firstCard);
 
-    // Let SnackBar animation run
-    await tester.pump();
-    await tester.pump(const Duration(seconds: 1));
+    // Wait for navigation
+    await tester.pumpAndSettle();
 
-    expect(find.textContaining('Classic Sweatshirt (dummy)'), findsOneWidget);
+    // Should navigate to ProductPage
+    expect(find.byType(ProductPage), findsOneWidget);
+    expect(find.text('Classic Sweatshirt'), findsOneWidget);
   });
 }
