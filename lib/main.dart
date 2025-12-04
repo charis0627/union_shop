@@ -106,43 +106,100 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: LayoutBuilder(
-                                    builder: (context, constraints) {
-                                      if (constraints.maxWidth < 420) {
-                                        return Center(
-                                          child: PopupMenuButton<String>(
+                            child: Builder(
+                              builder: (context) {
+                                final screenWidth =
+                                    MediaQuery.of(context).size.width;
+                                final isMobile = screenWidth < 600;
+
+                                if (isMobile) {
+                                  // Mobile view: show spacer and only icon buttons
+                                  return Row(
+                                    children: [
+                                      const Spacer(),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
                                             icon: const Icon(
-                                              Icons.more_horiz,
+                                              Icons.search,
+                                              size: 18,
+                                              color: Colors.grey,
+                                            ),
+                                            padding: const EdgeInsets.all(8),
+                                            constraints: const BoxConstraints(
+                                              minWidth: 32,
+                                              minHeight: 32,
+                                            ),
+                                            onPressed:
+                                                placeholderCallbackForButtons,
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.person_outline,
+                                              size: 18,
                                               color: Colors.black,
                                             ),
+                                            padding: const EdgeInsets.all(8),
+                                            constraints: const BoxConstraints(
+                                              minWidth: 32,
+                                              minHeight: 32,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pushNamed(
+                                                  context, '/auth');
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.shopping_bag_outlined,
+                                              size: 18,
+                                              color: Colors.grey,
+                                            ),
+                                            padding: const EdgeInsets.all(8),
+                                            constraints: const BoxConstraints(
+                                              minWidth: 32,
+                                              minHeight: 32,
+                                            ),
+                                            onPressed:
+                                                placeholderCallbackForButtons,
+                                          ),
+                                          PopupMenuButton<String>(
+                                            icon: const Icon(
+                                              Icons.menu,
+                                              size: 18,
+                                              color: Colors.grey,
+                                            ),
+                                            padding: const EdgeInsets.all(8),
                                             onSelected: (value) {
-                                              if (value == 'home') {
-                                                Navigator
-                                                    .pushNamedAndRemoveUntil(
-                                                        context,
-                                                        '/',
-                                                        (route) => false);
-                                              } else if (value == 'sale') {
-                                                Navigator.pushNamed(
-                                                    context, '/sale');
-                                              } else if (value == 'about') {
-                                                Navigator.pushNamed(
-                                                    context, '/about');
-                                              } else if (value ==
-                                                  'collections') {
-                                                Navigator.pushNamed(
-                                                    context, '/collections');
-                                              } else if (value ==
-                                                  'print_about') {
-                                                Navigator.pushNamed(context,
-                                                    '/about-print-shack');
-                                              } else if (value ==
-                                                  'print_personalisation') {
-                                                Navigator.pushNamed(
-                                                    context, '/print-shack');
+                                              switch (value) {
+                                                case 'home':
+                                                  Navigator
+                                                      .pushNamedAndRemoveUntil(
+                                                          context,
+                                                          '/',
+                                                          (route) => false);
+                                                  break;
+                                                case 'sale':
+                                                  Navigator.pushNamed(
+                                                      context, '/sale');
+                                                  break;
+                                                case 'about':
+                                                  Navigator.pushNamed(
+                                                      context, '/about');
+                                                  break;
+                                                case 'collections':
+                                                  Navigator.pushNamed(
+                                                      context, '/collections');
+                                                  break;
+                                                case 'print_about':
+                                                  Navigator.pushNamed(context,
+                                                      '/about-print-shack');
+                                                  break;
+                                                case 'print_personalisation':
+                                                  Navigator.pushNamed(
+                                                      context, '/print-shack');
+                                                  break;
                                               }
                                             },
                                             itemBuilder: (_) => const [
@@ -169,100 +226,109 @@ class HomeScreen extends StatelessWidget {
                                                       'The Print Shack — Personalisation')),
                                             ],
                                           ),
-                                        );
-                                      }
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
 
-                                      return Center(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () => Navigator
-                                                  .pushNamedAndRemoveUntil(
-                                                      context,
-                                                      '/',
-                                                      (route) => false),
-                                              style: TextButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12),
-                                                foregroundColor: Colors.black,
+                                // Desktop view: show navigation buttons and icons
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              TextButton(
+                                                onPressed: () => Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                        context,
+                                                        '/',
+                                                        (route) => false),
+                                                style: TextButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12),
+                                                  foregroundColor: Colors.black,
+                                                ),
+                                                child: const Text('Home'),
                                               ),
-                                              child: const Text('Home'),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            // The Print Shack menu (underlined label + caret)
-                                            PopupMenuButton<String>(
-                                              padding: EdgeInsets.zero,
-                                              onSelected: (value) {
-                                                if (value == 'about') {
-                                                  Navigator.pushNamed(context,
-                                                      '/about-print-shack');
-                                                } else if (value ==
-                                                    'personalisation') {
-                                                  Navigator.pushNamed(
-                                                      context, '/print-shack');
-                                                }
-                                              },
-                                              itemBuilder: (_) => const [
-                                                PopupMenuItem(
-                                                    value: 'about',
-                                                    child: Text('About')),
-                                                PopupMenuItem(
-                                                    value: 'personalisation',
-                                                    child: Text(
-                                                        'Personalisation')),
-                                              ],
-                                              child: const Row(
-                                                children: [
-                                                  Text(
-                                                    'The Print Shack',
-                                                    style: TextStyle(
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                      decorationThickness: 1.5,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 6),
-                                                  Icon(Icons.arrow_drop_down,
-                                                      size: 18,
-                                                      color: Colors.black),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pushNamed(
-                                                    context, '/sale');
-                                              },
-                                              style: TextButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12),
-                                                foregroundColor: Colors.black,
-                                              ),
-                                              child: const Text('SALE!'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pushNamed(
-                                                    context, '/about');
-                                              },
-                                              style: TextButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 12),
-                                                foregroundColor: Colors.black,
-                                              ),
-                                              child: const Text('About'),
-                                            ),
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pushNamed(
-                                                      context, '/collections');
+                                              const SizedBox(width: 8),
+                                              PopupMenuButton<String>(
+                                                padding: EdgeInsets.zero,
+                                                onSelected: (value) {
+                                                  if (value == 'about') {
+                                                    Navigator.pushNamed(context,
+                                                        '/about-print-shack');
+                                                  } else if (value ==
+                                                      'personalisation') {
+                                                    Navigator.pushNamed(context,
+                                                        '/print-shack');
+                                                  }
                                                 },
+                                                itemBuilder: (_) => const [
+                                                  PopupMenuItem(
+                                                      value: 'about',
+                                                      child: Text('About')),
+                                                  PopupMenuItem(
+                                                      value: 'personalisation',
+                                                      child: Text(
+                                                          'Personalisation')),
+                                                ],
+                                                child: const Row(
+                                                  children: [
+                                                    Text(
+                                                      'The Print Shack',
+                                                      style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        decorationThickness:
+                                                            1.5,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 6),
+                                                    Icon(Icons.arrow_drop_down,
+                                                        size: 18,
+                                                        color: Colors.black),
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(
+                                                        context, '/sale'),
+                                                style: TextButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12),
+                                                  foregroundColor: Colors.black,
+                                                ),
+                                                child: const Text('SALE!'),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(
+                                                        context, '/about'),
+                                                style: TextButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 12),
+                                                  foregroundColor: Colors.black,
+                                                ),
+                                                child: const Text('About'),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pushNamed(context,
+                                                        '/collections'),
                                                 style: TextButton.styleFrom(
                                                   padding: const EdgeInsets
                                                       .symmetric(
@@ -270,73 +336,59 @@ class HomeScreen extends StatelessWidget {
                                                   foregroundColor: Colors.black,
                                                 ),
                                                 child:
-                                                    const Text('Collections')),
-                                          ],
+                                                    const Text('Collections'),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.search,
-                                        size: 18,
-                                        color: Colors.grey,
                                       ),
-                                      padding: const EdgeInsets.all(8),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      onPressed: placeholderCallbackForButtons,
                                     ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.person_outline,
-                                        size: 18,
-                                        color: Colors.black,
-                                      ),
-                                      padding: const EdgeInsets.all(8),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/auth');
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.shopping_bag_outlined,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      padding: const EdgeInsets.all(8),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      onPressed: placeholderCallbackForButtons,
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.menu,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      padding: const EdgeInsets.all(8),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      onPressed: placeholderCallbackForButtons,
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.search,
+                                              size: 18, color: Colors.grey),
+                                          padding: const EdgeInsets.all(8),
+                                          constraints: const BoxConstraints(
+                                              minWidth: 32, minHeight: 32),
+                                          onPressed:
+                                              placeholderCallbackForButtons,
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.person_outline,
+                                              size: 18, color: Colors.black),
+                                          padding: const EdgeInsets.all(8),
+                                          constraints: const BoxConstraints(
+                                              minWidth: 32, minHeight: 32),
+                                          onPressed: () => Navigator.pushNamed(
+                                              context, '/auth'),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                              Icons.shopping_bag_outlined,
+                                              size: 18,
+                                              color: Colors.grey),
+                                          padding: const EdgeInsets.all(8),
+                                          constraints: const BoxConstraints(
+                                              minWidth: 32, minHeight: 32),
+                                          onPressed:
+                                              placeholderCallbackForButtons,
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.menu,
+                                              size: 18, color: Colors.grey),
+                                          padding: const EdgeInsets.all(8),
+                                          constraints: const BoxConstraints(
+                                              minWidth: 32, minHeight: 32),
+                                          onPressed:
+                                              placeholderCallbackForButtons,
+                                        ),
+                                      ],
                                     ),
                                   ],
-                                ),
-                              ],
+                                );
+                              },
                             ),
                           ),
                         ],
