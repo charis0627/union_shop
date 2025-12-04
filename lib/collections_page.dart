@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/main_header.dart';
 import 'package:union_shop/widgets/main_footer.dart';
 import 'package:union_shop/models/products.dart';
+import 'package:union_shop/product_page.dart';
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
@@ -241,8 +242,15 @@ class _CollectionItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('$title tapped')));
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => ProductPage(
+              title: title,
+              price: price,
+              asset: asset,
+            ),
+          ),
+        );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
