@@ -75,6 +75,16 @@ class SalePage extends StatelessWidget {
                                 DropdownMenuItem(
                                     value: 'All products',
                                     child: Text('All products')),
+                                DropdownMenuItem(
+                                    value: 'Hoodies', child: Text('Hoodies')),
+                                DropdownMenuItem(
+                                    value: 'Sweatshirts',
+                                    child: Text('Sweatshirts')),
+                                DropdownMenuItem(
+                                    value: 'Notebooks',
+                                    child: Text('Notebooks')),
+                                DropdownMenuItem(
+                                    value: 'Notepads', child: Text('Notepads')),
                               ],
                               onChanged: (_) {},
                             ),
@@ -96,6 +106,17 @@ class SalePage extends StatelessWidget {
                                 DropdownMenuItem(
                                     value: 'Best selling',
                                     child: Text('Best selling')),
+                                DropdownMenuItem(
+                                    value: 'Price: Low to High',
+                                    child: Text('Price: Low to High')),
+                                DropdownMenuItem(
+                                    value: 'Price: High to Low',
+                                    child: Text('Price: High to Low')),
+                                DropdownMenuItem(
+                                    value: 'Newest', child: Text('Newest')),
+                                DropdownMenuItem(
+                                    value: 'Alphabetically',
+                                    child: Text('Alphabetically')),
                               ],
                               onChanged: (_) {},
                             ),
@@ -107,40 +128,61 @@ class SalePage extends StatelessWidget {
                       ),
                     ],
                   );
+                } else {
+                  return Row(
+                    children: [
+                      const Text('Filter By',
+                          style: TextStyle(
+                              letterSpacing: 1.2, color: Colors.black)),
+                      const SizedBox(width: 12),
+                      DropdownButton<String>(
+                        value: 'All products',
+                        items: const [
+                          DropdownMenuItem(
+                              value: 'All products',
+                              child: Text('All products')),
+                          DropdownMenuItem(
+                              value: 'Hoodies', child: Text('Hoodies')),
+                          DropdownMenuItem(
+                              value: 'Sweatshirts', child: Text('Sweatshirts')),
+                          DropdownMenuItem(
+                              value: 'Notebooks', child: Text('Notebooks')),
+                          DropdownMenuItem(
+                              value: 'Notepads', child: Text('Notepads')),
+                        ],
+                        onChanged: (_) {},
+                      ),
+                      const SizedBox(width: 24),
+                      const Text('Sort By',
+                          style: TextStyle(
+                              letterSpacing: 1.2, color: Colors.black)),
+                      const SizedBox(width: 12),
+                      DropdownButton<String>(
+                        value: 'Best selling',
+                        items: const [
+                          DropdownMenuItem(
+                              value: 'Best selling',
+                              child: Text('Best selling')),
+                          DropdownMenuItem(
+                              value: 'Price: Low to High',
+                              child: Text('Price: Low to High')),
+                          DropdownMenuItem(
+                              value: 'Price: High to Low',
+                              child: Text('Price: High to Low')),
+                          DropdownMenuItem(
+                              value: 'Newest', child: Text('Newest')),
+                          DropdownMenuItem(
+                              value: 'Alphabetically',
+                              child: Text('Alphabetically')),
+                        ],
+                        onChanged: (_) {},
+                      ),
+                      const Spacer(),
+                      const Text('3 products',
+                          style: TextStyle(color: Colors.black)),
+                    ],
+                  );
                 }
-
-                return Row(
-                  children: [
-                    const Text('Filter By',
-                        style:
-                            TextStyle(letterSpacing: 1.2, color: Colors.black)),
-                    const SizedBox(width: 12),
-                    DropdownButton<String>(
-                      value: 'All products',
-                      items: const [
-                        DropdownMenuItem(
-                            value: 'All products', child: Text('All products')),
-                      ],
-                      onChanged: (_) {},
-                    ),
-                    const SizedBox(width: 16),
-                    const Text('Sort By',
-                        style:
-                            TextStyle(letterSpacing: 1.2, color: Colors.black)),
-                    const SizedBox(width: 12),
-                    DropdownButton<String>(
-                      value: 'Best selling',
-                      items: const [
-                        DropdownMenuItem(
-                            value: 'Best selling', child: Text('Best selling')),
-                      ],
-                      onChanged: (_) {},
-                    ),
-                    const SizedBox(width: 24),
-                    const Text('3 products',
-                        style: TextStyle(color: Colors.black)),
-                  ],
-                );
               }),
             ),
             Padding(
