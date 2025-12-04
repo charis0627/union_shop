@@ -114,7 +114,7 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                     icon: const Icon(
                                       Icons.menu,
                                       size: 18,
-                                      color: Colors.grey,
+                                      color: Colors.black,
                                     ),
                                     padding: const EdgeInsets.all(8),
                                     onSelected: (value) {
@@ -304,7 +304,7 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.menu,
-                                      size: 18, color: Colors.grey),
+                                      size: 18, color: Colors.black),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(
                                       minWidth: 32, minHeight: 32),
