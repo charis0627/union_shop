@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/cart_page.dart';
 
 class MainHeader extends StatelessWidget implements PreferredSizeWidget {
   const MainHeader({super.key});
@@ -94,14 +95,20 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                     icon: const Icon(
                                       Icons.shopping_bag_outlined,
                                       size: 18,
-                                      color: Colors.grey,
+                                      color: Colors.black,
                                     ),
                                     padding: const EdgeInsets.all(8),
                                     constraints: const BoxConstraints(
                                       minWidth: 32,
                                       minHeight: 32,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) => const CartPage(),
+                                        ),
+                                      );
+                                    },
                                   ),
                                   PopupMenuButton<String>(
                                     icon: const Icon(
@@ -277,16 +284,23 @@ class MainHeader extends StatelessWidget implements PreferredSizeWidget {
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(
                                       minWidth: 32, minHeight: 32),
-                                  onPressed: () =>
-                                      Navigator.pushNamed(context, '/auth'),
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/auth');
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.shopping_bag_outlined,
-                                      size: 18, color: Colors.grey),
+                                      size: 18, color: Colors.black),
                                   padding: const EdgeInsets.all(8),
                                   constraints: const BoxConstraints(
                                       minWidth: 32, minHeight: 32),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const CartPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.menu,
