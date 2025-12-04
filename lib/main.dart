@@ -6,6 +6,7 @@ import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/print_shack_page.dart';
 import 'package:union_shop/about_print_shack.dart';
+import 'package:union_shop/cart_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -154,15 +155,21 @@ class HomeScreen extends StatelessWidget {
                                             icon: const Icon(
                                               Icons.shopping_bag_outlined,
                                               size: 18,
-                                              color: Colors.grey,
+                                              color: Colors.black,
                                             ),
                                             padding: const EdgeInsets.all(8),
                                             constraints: const BoxConstraints(
                                               minWidth: 32,
                                               minHeight: 32,
                                             ),
-                                            onPressed:
-                                                placeholderCallbackForButtons,
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const CartPage(),
+                                                ),
+                                              );
+                                            },
                                           ),
                                           PopupMenuButton<String>(
                                             icon: const Icon(
@@ -368,12 +375,18 @@ class HomeScreen extends StatelessWidget {
                                           icon: const Icon(
                                               Icons.shopping_bag_outlined,
                                               size: 18,
-                                              color: Colors.grey),
+                                              color: Colors.black),
                                           padding: const EdgeInsets.all(8),
                                           constraints: const BoxConstraints(
                                               minWidth: 32, minHeight: 32),
-                                          onPressed:
-                                              placeholderCallbackForButtons,
+                                          onPressed: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const CartPage(),
+                                              ),
+                                            );
+                                          },
                                         ),
                                         IconButton(
                                           icon: const Icon(Icons.menu,
