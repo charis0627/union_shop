@@ -52,12 +52,24 @@ If you see issues, run `flutter doctor` and follow the guidance.
 3. Usage
 --------
 
-- Navigation: use the top navigation (shared `MainHeader`) to move between `Home`, `Collections`, `SALE!`, `About` and `The Print Shack` menu.
-- The Print Shack menu contains two entries: `About` (navigates to `/about-print-shack`) and `Personalisation` (navigates to `/print-shack`).
-- Print Shack features:
+- **Navigation:** Use the top navigation (shared `MainHeader`) to move between `Home`, `Collections`, `SALE!`, `About`, and `The Print Shack` menu.
+  - On mobile (< 600px width), navigation buttons collapse into a menu icon (PopupMenuButton).
+  - Desktop view shows all navigation buttons inline.
+- **Shopping Cart:** 
+  - Click the shopping bag icon in the header to view cart contents.
+  - Add items from Collections, Sale, or Print Shack personalisation pages.
+  - Cart displays item total, quantity controls, and order summary with subtotal, tax, and grand total.
+- **Collections Page:**
+  - Browse products with category and price range filters.
+  - Sort by name, price (ascending/descending), or newest.
+  - Click a product to view details, select color/size/quantity, and add to cart.
+- **Sale Page:**
+  - Similar filtering and sorting as Collections.
+  - Browse discounted products and add to cart.
+- **Print Shack:**
   - Choose how many lines of text to print (one or two).
-  - Enter custom text lines and see a live preview over sample product images.
-  - Select thumbnails and quantity, then press `ADD TO CART` (currently a SnackBar placeholder).
+  - Enter custom text and see live preview over sample product images.
+  - Select quantity, then press `ADD TO CART` to add personalised item to cart.
 
 Running tests
 
@@ -66,10 +78,10 @@ Running tests
 flutter test
 
 # Run a single test file
-flutter test test/about_print_shack_test.dart
+flutter test test/cart_test.dart
 ```
 
-Notes: widget tests run in headless mode — network images can fail there. Prefer `Image.asset` in tests or mock network images; this project includes test-side helpers to drain async exceptions in some tests.
+Notes: widget tests run in headless mode — network images can fail there. Tests use `setSurfaceSize(1200, 900)` for consistent viewport sizing across desktop and mobile layouts.
 
 ---
 
@@ -80,24 +92,36 @@ Top-level layout
 
 ```
 lib/
-├─ main.dart                 # App entry + routes
-├─ product_page.dart         # Product detail UI
-├─ sale_page.dart
-├─ collections_page.dart
-├─ print_shack_page.dart     # Personalisation page
-├─ about_print_shack.dart    # About page
+├─ main.dart                    # App entry + routes
+├─ cart_page.dart               # Shopping cart page
+├─ product_page.dart            # Product detail UI
+├─ sale_page.dart               # Sale products page
+├─ collections_page.dart        # Collections/products page
+├─ print_shack_page.dart        # Personalisation page
+├─ about_print_shack.dart       # About page
+├─ about_us_page.dart           # About us page
+├─ authentication_page.dart     # Authentication page
+├─ models/
+│  └─ products.dart             # Product and ProductCategory classes, ProductDatabase
 └─ widgets/
-   ├─ main_header.dart      # Shared header
-   └─ main_footer.dart      # Shared footer
+   ├─ main_header.dart          # Shared header with responsive navigation
+   └─ main_footer.dart          # Shared footer
 
-assets/images/              # Local images
-test/                       # Widget tests
+assets/images/                  # Local images
+test/                           # Widget tests
+  ├─ cart_test.dart             # Cart functionality tests
+  └─ ...other page tests...
 ```
 
 Technologies
 
 - Flutter (Dart) — primary UI toolkit
-- Uses core Flutter widgets: `LayoutBuilder`, `GridView`, `SingleChildScrollView`, `Image.asset`, `PopupMenuButton`, etc.
+- **State Management:** CartService singleton pattern for global cart state management
+- **Responsive Design:** MediaQuery-based mobile breakpoint (600px), LayoutBuilder for adaptive layouts
+- **Navigation:** Named routes, Navigator.pushNamed, MaterialPageRoute
+- **Data Model:** Const Product/ProductCategory/ProductDatabase classes with 10+ products
+- **UI Widgets:** LayoutBuilder, GridView, Table (with FlexColumnWidth), SingleChildScrollView, PopupMenuButton, DropdownButton, Image.asset, Image.network (with errorBuilder), TextField, IconButton
+- **Filtering & Sorting:** DropdownButton for category, price range, and sort options on Collections and Sale pages
 
 Configuration
 
@@ -108,14 +132,17 @@ Configuration
 5. Known Issues
 ---------------
 
-- Network images may fail in widget tests (test environment blocks network requests). Tests in this repo handle this with fallbacks or by draining async exceptions.
+- Network images may fail in widget tests (test environment blocks network requests). Tests use `Image.asset` fallbacks with errorBuilder to handle this gracefully.
 - The app is a demo and does not implement backend services: cart persistence, payments, and full authentication are not implemented (placeholders only).
-- Some pages previously had inline headers; prefer using the shared `MainHeader` for consistent behavior.
+- Mobile responsiveness is tested at the 600px breakpoint; smaller devices may require further adjustments.
 
-Suggested fixes
+Suggested improvements
 
-- Use `Image.asset` for determinism in tests.
-- Add integration tests and CI to catch regressions early.
+- Implement cart persistence using `shared_preferences` or local database.
+- Add payment integration (Stripe, PayPal).
+- Implement proper authentication with backend service.
+- Add more comprehensive integration tests for cart workflows.
+- Add CI/CD pipeline for automated testing.
 
 ---
 
