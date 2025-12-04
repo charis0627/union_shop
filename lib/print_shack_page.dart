@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/main_header.dart';
 import 'package:union_shop/widgets/main_footer.dart';
+import 'package:union_shop/cart_page.dart';
 
 class PrintShackPage extends StatefulWidget {
   const PrintShackPage({super.key});
@@ -57,9 +58,42 @@ class _PrintShackPageState extends State<PrintShackPage> {
       );
       return;
     }
-    final msg =
-        'Added $quantity × Personalisation (${perLine == 'One Line of Text' ? line1Controller.text : '${line1Controller.text} / ${line2Controller.text}'}) to cart';
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+
+    final cartService = CartService();
+    final personalisationText = perLine == 'One Line of Text'
+        ? line1Controller.text
+        : '${line1Controller.text} / ${line2Controller.text}';
+
+    final price = perLine == 'One Line of Text' ? '£3.00' : '£5.00';
+    final qty = int.parse(quantity);
+
+    cartService.addItem(
+      CartItem(
+        id: 'personalisation-$personalisationText-${DateTime.now().millisecondsSinceEpoch}',
+        title: 'Personalisation ($perLine)',
+        price: price,
+        asset: selectedImage,
+        quantity: qty,
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+            'Added $quantity × Personalisation ($personalisationText) to cart'),
+        duration: const Duration(seconds: 2),
+        action: SnackBarAction(
+          label: 'View Cart',
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const CartPage(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   Widget _buildPreview(BoxConstraints constraints) {
