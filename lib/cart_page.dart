@@ -91,9 +91,8 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MainHeader(),
-      body: _cartService.items.isEmpty
-          ? _buildEmptyCart()
-          : _buildCartContent(),
+      body:
+          _cartService.items.isEmpty ? _buildEmptyCart() : _buildCartContent(),
     );
   }
 
@@ -189,16 +188,15 @@ class _CartPageState extends State<CartPage> {
             children: [
               Table(
                 columnWidths: const {
-                  0: FlexColumnWidth(2),
-                  1: FlexColumnWidth(1),
-                  2: FlexColumnWidth(1),
-                  3: FlexColumnWidth(1),
-                  4: FlexColumnWidth(0.8),
+                  0: FlexColumnWidth(2.5),
+                  1: FlexColumnWidth(0.8),
+                  2: FlexColumnWidth(1.5),
+                  3: FlexColumnWidth(0.8),
+                  4: FlexColumnWidth(0.6),
                 },
                 children: [
                   TableRow(
-                    decoration:
-                        const BoxDecoration(color: Color(0xFFF5F5F5)),
+                    decoration: const BoxDecoration(color: Color(0xFFF5F5F5)),
                     children: [
                       const Padding(
                         padding: EdgeInsets.all(12.0),
@@ -230,7 +228,8 @@ class _CartPageState extends State<CartPage> {
                     return TableRow(
                       decoration: const BoxDecoration(
                           border: Border(
-                              bottom: BorderSide(color: Colors.grey, width: 1))),
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(12.0),
@@ -415,9 +414,11 @@ class _CartPageState extends State<CartPage> {
           const Text('Order Summary',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
-          _buildSummaryRow('Subtotal', '£${_cartService.subtotal.toStringAsFixed(2)}'),
+          _buildSummaryRow(
+              'Subtotal', '£${_cartService.subtotal.toStringAsFixed(2)}'),
           const SizedBox(height: 8),
-          _buildSummaryRow('Tax (20%)', '£${_cartService.tax.toStringAsFixed(2)}'),
+          _buildSummaryRow(
+              'Tax (20%)', '£${_cartService.tax.toStringAsFixed(2)}'),
           Divider(color: Colors.grey[300], height: 24),
           _buildSummaryRow('Total', '£${_cartService.total.toStringAsFixed(2)}',
               isBold: true),

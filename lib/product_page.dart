@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/main_header.dart';
 import 'package:union_shop/widgets/main_footer.dart';
+import 'package:union_shop/cart_page.dart';
 
 class ProductPage extends StatefulWidget {
   final String title;
@@ -275,8 +276,39 @@ class _ProductPageState extends State<ProductPage> {
                     SizedBox(
                       width: isWide ? 380 : double.infinity,
                       child: OutlinedButton(
-                        onPressed: () => _showPlaceholder(
-                            'Added $_selectedQuantity x Classic Sweatshirt ($_selectedColor, $_selectedSize) to cart'),
+                        onPressed: () {
+                          final cartService = CartService();
+                          final quantity = int.parse(_selectedQuantity);
+
+                          cartService.addItem(
+                            CartItem(
+                              id: '${widget.title}-$_selectedColor-$_selectedSize',
+                              title: widget.title,
+                              price: widget.price,
+                              asset: widget.asset,
+                              quantity: quantity,
+                            ),
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Added $_selectedQuantity x ${widget.title} ($_selectedColor, $_selectedSize) to cart',
+                              ),
+                              duration: const Duration(seconds: 2),
+                              action: SnackBarAction(
+                                label: 'View Cart',
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => const CartPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Color(0xFF4d2963)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
