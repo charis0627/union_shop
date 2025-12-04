@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/main_header.dart';
 import 'package:union_shop/widgets/main_footer.dart';
+import 'package:union_shop/models/products.dart';
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
-
-  static const List<Map<String, String>> collections = [
-    {'title': 'Hoodies', 'asset': 'assets/images/hoodies.png'},
-    {'title': 'Sweatshirts', 'asset': 'assets/images/sweatshirts.png'},
-    {'title': 'Notebooks', 'asset': 'assets/images/notebook.png'},
-    {'title': 'Notepads', 'asset': 'assets/images/notepad.png'},
-    {'title': 'Hats', 'asset': 'assets/images/hat.png'},
-    {'title': 'Cups', 'asset': 'assets/images/cup.png'},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +33,18 @@ class CollectionsPage extends StatelessWidget {
                   mainAxisSpacing: 24,
                   childAspectRatio: 1.0,
                 ),
-                itemCount: collections.length,
+                itemCount: ProductDatabase.categories.length,
                 itemBuilder: (context, index) {
-                  final c = collections[index];
+                  final category = ProductDatabase.categories[index];
                   return _CollectionCard(
                     key: Key('collection_card_$index'),
-                    title: c['title']!,
-                    asset: c['asset']!,
+                    title: category.name,
+                    asset: category.imageAsset,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) => CollectionDetailPage(
-                          title: c['title']!,
-                          asset: c['asset']!,
+                          title: category.name,
+                          asset: category.imageAsset,
                         ),
                       ));
                     },
@@ -130,78 +122,13 @@ class CollectionDetailPage extends StatelessWidget {
   const CollectionDetailPage(
       {super.key, required this.title, required this.asset});
 
-  static const Map<String, List<Map<String, String>>> itemsByCollection = {
-    'Hoodies': [
-      {
-        'title': 'Classic Hoodie',
-        'price': '£25.00',
-        'asset': 'assets/images/hoodies.png'
-      },
-      {
-        'title': 'Purple Hoodie',
-        'price': '£27.00',
-        'asset': 'assets/images/hoodies.png'
-      },
-      {
-        'title': 'Green Hoodie',
-        'price': '£23.00',
-        'asset': 'assets/images/hoodies.png'
-      },
-    ],
-    'Sweatshirts': [
-      {
-        'title': 'Classic Sweatshirt',
-        'price': '£23.00',
-        'asset': 'assets/images/sweatshirts.png'
-      },
-      {
-        'title': 'Grey Sweatshirt',
-        'price': '£20.00',
-        'asset': 'assets/images/sweatshirts.png'
-      },
-    ],
-    'Notebooks': [
-      {
-        'title': 'A5 Notebook',
-        'price': '£3.00',
-        'asset': 'assets/images/notebook.png'
-      },
-      {
-        'title': 'Hardback Notebook',
-        'price': '£6.00',
-        'asset': 'assets/images/notebook.png'
-      },
-    ],
-    'Notepads': [
-      {
-        'title': 'A5 Notepad',
-        'price': '£1.80',
-        'asset': 'assets/images/notepad.png'
-      },
-    ],
-    'Hats': [
-      {
-        'title': 'University Hat',
-        'price': '£12.00',
-        'asset': 'assets/images/hat.png'
-      },
-    ],
-    'Cups': [
-      {
-        'title': 'Union Mug',
-        'price': '£5.00',
-        'asset': 'assets/images/cup.png'
-      },
-    ],
-  };
-
-  List<Map<String, String>> itemsFor(String collection) {
-    return itemsByCollection[collection] ?? [];
+  List<Product> get items {
+    return ProductDatabase.getProductsByCategory(title);
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = itemsFor(title);
+    final products = items;
 
     return Scaffold(
       appBar: const MainHeader(),
@@ -281,13 +208,13 @@ class CollectionDetailPage extends StatelessWidget {
                     mainAxisSpacing: 24,
                     childAspectRatio: 0.85,
                   ),
-                  itemCount: items.length,
+                  itemCount: products.length,
                   itemBuilder: (context, index) {
-                    final it = items[index];
+                    final product = products[index];
                     return _CollectionItemCard(
-                      title: it['title']!,
-                      price: it['price']!,
-                      asset: it['asset']!,
+                      title: product.title,
+                      price: product.price,
+                      asset: product.imageAsset,
                     );
                   },
                 );
