@@ -168,6 +168,16 @@ class CollectionDetailPage extends StatelessWidget {
                       items: const [
                         DropdownMenuItem(
                             value: 'All products', child: Text('All products')),
+                        DropdownMenuItem(
+                            value: 'Hoodies', child: Text('Hoodies')),
+                        DropdownMenuItem(
+                            value: 'Sweatshirts', child: Text('Sweatshirts')),
+                        DropdownMenuItem(
+                            value: 'Notebooks', child: Text('Notebooks')),
+                        DropdownMenuItem(
+                            value: 'Notepads', child: Text('Notepads')),
+                        DropdownMenuItem(value: 'Hats', child: Text('Hats')),
+                        DropdownMenuItem(value: 'Cups', child: Text('Cups')),
                       ],
                       onChanged: (_) {},
                     ),
@@ -183,6 +193,17 @@ class CollectionDetailPage extends StatelessWidget {
                       items: const [
                         DropdownMenuItem(
                             value: 'Best selling', child: Text('Best selling')),
+                        DropdownMenuItem(
+                            value: 'Price: Low to High',
+                            child: Text('Price: Low to High')),
+                        DropdownMenuItem(
+                            value: 'Price: High to Low',
+                            child: Text('Price: High to Low')),
+                        DropdownMenuItem(
+                            value: 'Newest', child: Text('Newest')),
+                        DropdownMenuItem(
+                            value: 'Alphabetically',
+                            child: Text('Alphabetically')),
                       ],
                       onChanged: (_) {},
                     ),
