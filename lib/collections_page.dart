@@ -116,20 +116,90 @@ class _CollectionCard extends StatelessWidget {
   }
 }
 
-class CollectionDetailPage extends StatelessWidget {
+class CollectionDetailPage extends StatefulWidget {
   final String title;
   final String asset;
 
   const CollectionDetailPage(
       {super.key, required this.title, required this.asset});
 
-  List<Product> get items {
-    return ProductDatabase.getProductsByCategory(title);
+  @override
+  State<CollectionDetailPage> createState() => _CollectionDetailPageState();
+}
+
+class _CollectionDetailPageState extends State<CollectionDetailPage> {
+  String _selectedCategory = 'All products';
+  String _selectedSort = 'Best selling';
+  int _currentPage = 1;
+  final int _itemsPerPage = 9;
+
+  List<Product> get _allProducts {
+    return ProductDatabase.getProductsByCategory(widget.title);
+  }
+
+  List<Product> get _filteredAndSortedProducts {
+    var products = _allProducts;
+
+    // Apply category filter
+    if (_selectedCategory != 'All products') {
+      products = products
+          .where((p) => p.category
+              .toLowerCase()
+              .contains(_selectedCategory.toLowerCase()))
+          .toList();
+    }
+
+    // Apply sorting
+    switch (_selectedSort) {
+      case 'Price: Low to High':
+        products.sort(
+            (a, b) => _parsePrice(a.price).compareTo(_parsePrice(b.price)));
+        break;
+      case 'Price: High to Low':
+        products.sort(
+            (a, b) => _parsePrice(b.price).compareTo(_parsePrice(a.price)));
+        break;
+      case 'Alphabetically':
+        products.sort((a, b) => a.title.compareTo(b.title));
+        break;
+      case 'Newest':
+        products = products.reversed.toList();
+        break;
+      case 'Best selling':
+      default:
+        // Keep original order
+        break;
+    }
+
+    return products;
+  }
+
+  double _parsePrice(String price) {
+    return double.tryParse(price.replaceAll('£', '').replaceAll(',', '')) ??
+        0.0;
+  }
+
+  List<Product> get _paginatedProducts {
+    final filtered = _filteredAndSortedProducts;
+    final startIndex = (_currentPage - 1) * _itemsPerPage;
+    final endIndex = startIndex + _itemsPerPage;
+
+    if (startIndex >= filtered.length) return [];
+    return filtered.sublist(
+      startIndex,
+      endIndex > filtered.length ? filtered.length : endIndex,
+    );
+  }
+
+  int get _totalPages {
+    final total = _filteredAndSortedProducts.length;
+    return (total / _itemsPerPage).ceil();
   }
 
   @override
   Widget build(BuildContext context) {
-    final products = items;
+    final products = _paginatedProducts;
+    final totalProductCount = _filteredAndSortedProducts.length;
 
     return Scaffold(
       appBar: const MainHeader(),
@@ -143,7 +213,7 @@ class CollectionDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(title,
+                  Text(widget.title,
                       style: const TextStyle(
                           fontSize: 28, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
@@ -164,7 +234,7 @@ class CollectionDetailPage extends StatelessWidget {
                   Expanded(
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: 'All products',
+                      value: _selectedCategory,
                       items: const [
                         DropdownMenuItem(
                             value: 'All products', child: Text('All products')),
@@ -179,7 +249,14 @@ class CollectionDetailPage extends StatelessWidget {
                         DropdownMenuItem(value: 'Hats', child: Text('Hats')),
                         DropdownMenuItem(value: 'Cups', child: Text('Cups')),
                       ],
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedCategory = value;
+                            _currentPage = 1; // Reset to first page
+                          });
+                        }
+                      },
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -189,7 +266,7 @@ class CollectionDetailPage extends StatelessWidget {
                   Expanded(
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: 'Best selling',
+                      value: _selectedSort,
                       items: const [
                         DropdownMenuItem(
                             value: 'Best selling', child: Text('Best selling')),
@@ -205,12 +282,19 @@ class CollectionDetailPage extends StatelessWidget {
                             value: 'Alphabetically',
                             child: Text('Alphabetically')),
                       ],
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        if (value != null) {
+                          setState(() {
+                            _selectedSort = value;
+                            _currentPage = 1; // Reset to first page
+                          });
+                        }
+                      },
                     ),
                   ),
                   const Spacer(),
-                  const Text('10 products',
-                      style: TextStyle(color: Colors.black54)),
+                  Text('$totalProductCount products',
+                      style: const TextStyle(color: Colors.black54)),
                 ],
               ),
             ),
@@ -242,6 +326,72 @@ class CollectionDetailPage extends StatelessWidget {
                 );
               }),
             ),
+            // Pagination controls
+            if (_totalPages > 1)
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.chevron_left),
+                      onPressed: _currentPage > 1
+                          ? () {
+                              setState(() {
+                                _currentPage--;
+                              });
+                            }
+                          : null,
+                    ),
+                    const SizedBox(width: 12),
+                    for (int i = 1; i <= _totalPages; i++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: _currentPage == i
+                            ? Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$i',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _currentPage = i;
+                                  });
+                                },
+                                child: Text(
+                                  '$i',
+                                  style: const TextStyle(color: Colors.black),
+                                ),
+                              ),
+                      ),
+                    const SizedBox(width: 12),
+                    IconButton(
+                      icon: const Icon(Icons.chevron_right),
+                      onPressed: _currentPage < _totalPages
+                          ? () {
+                              setState(() {
+                                _currentPage++;
+                              });
+                            }
+                          : null,
+                    ),
+                  ],
+                ),
+              ),
             const SizedBox(height: 24),
             const MainFooter(),
           ],

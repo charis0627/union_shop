@@ -138,6 +138,86 @@ class ProductDatabase {
       imageAsset: 'assets/images/cup.png',
       description: 'Union branded ceramic mug',
     ),
+    Product(
+      id: 'cup_002',
+      title: 'Travel Tumbler',
+      price: '£8.00',
+      category: 'Cups',
+      imageAsset: 'assets/images/cup.png',
+      description: 'Insulated travel cup',
+    ),
+
+    // Additional Hoodies
+    Product(
+      id: 'hoodie_003',
+      title: 'Sports Hoodie',
+      price: '£32.00',
+      category: 'Hoodies',
+      imageAsset: 'assets/images/hoodies.png',
+      description: 'Athletic fit hoodie',
+    ),
+    Product(
+      id: 'hoodie_004',
+      title: 'Varsity Hoodie',
+      price: '£38.00',
+      category: 'Hoodies',
+      imageAsset: 'assets/images/hoodies.png',
+      description: 'College-style varsity hoodie',
+    ),
+
+    // Additional Sweatshirts
+    Product(
+      id: 'sweat_003',
+      title: 'Crew Neck Sweatshirt',
+      price: '£24.00',
+      category: 'Sweatshirts',
+      imageAsset: 'assets/images/sweatshirts.png',
+      description: 'Classic crew neck design',
+    ),
+    Product(
+      id: 'sweat_004',
+      title: 'Vintage Sweatshirt',
+      price: '£27.00',
+      category: 'Sweatshirts',
+      imageAsset: 'assets/images/sweatshirts.png',
+      description: 'Retro style sweatshirt',
+    ),
+
+    // Additional Notebooks
+    Product(
+      id: 'notebook_003',
+      title: 'Spiral Notebook',
+      price: '£4.50',
+      category: 'Notebooks',
+      imageAsset: 'assets/images/notebook.png',
+      description: 'Wire-bound notebook',
+    ),
+    Product(
+      id: 'notebook_004',
+      title: 'Hardcover Journal',
+      price: '£9.00',
+      category: 'Notebooks',
+      imageAsset: 'assets/images/notebook.png',
+      description: 'Premium hardcover notebook',
+    ),
+
+    // Additional Hats
+    Product(
+      id: 'hat_003',
+      title: 'Bucket Hat',
+      price: '£13.00',
+      category: 'Hats',
+      imageAsset: 'assets/images/hat.png',
+      description: 'Classic bucket hat style',
+    ),
+    Product(
+      id: 'hat_004',
+      title: 'Trucker Cap',
+      price: '£11.00',
+      category: 'Hats',
+      imageAsset: 'assets/images/hat.png',
+      description: 'Mesh back trucker cap',
+    ),
   ];
 
   /// Get all products in a specific category
